@@ -1,0 +1,34 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f9f9f9;
+  color: #000;
+  transition: background 0.3s, color 0.3s;
+}
+body.dark {
+  background:#000;
+  color: #fff;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #333;
+  color: white;
+}
+#noteControls {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+}
+#searchInput {
+  flex: 1;
+  padding: 8px;
+}
+#notesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px;
+}
