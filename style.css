@@ -1,34 +1,264 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f9f9f9;
-  color: #000;
-  transition: background 0.3s, color 0.3s;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f9f9f9;
+    color: #000;
+    transition: background 0.3s, color 0.3s;
 }
+
+:root {
+    --accent-color: #ffcc00;
+    --text-color: #000;
+    --header-bg: #333;
+    --header-text: white;
+}
+
 body.dark {
-  background:#000;
-  color: #fff;
+    background: #000;
+    color: #fff;
+    --accent-color: #00aaff;
+    --text-color: #fff;
+    --header-bg: #1a1a1a;
+    --header-text: #fff;
 }
+
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background: #333;
-  color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: var(--header-bg);
+    color: var(--header-text);
 }
+
+#themeToggle {
+    font-size: 1.5em;
+    padding: 5px 10px;
+    border: 1px solid var(--header-text);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    line-height: 1;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+#themeToggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
 #noteControls {
-  display: flex;
-  gap: 10px;
-  padding: 15px;
+    display: flex;
+    gap: 10px;
+    padding: 15px;
 }
 #searchInput {
-  flex: 1;
-  padding: 8px;
+    flex: 1;
+    padding: 8px;
+    color: var(--text-color);
+    background-color: var(--header-text);
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
+
+body.dark #searchInput {
+    background-color: #333;
+    border-color: #555;
+    color: white;
+}
+
 #notesContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  padding: 15px;
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 15px;
+}
+
+.note-card {
+    width: 250px;
+    min-height: 150px;
+    padding: 15px;
+    border-radius: 8px;
+    /* Static background and border rules removed here, now handled by JS for themes */
+    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+    order: 0; 
+}
+
+.note-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.15);
+}
+
+body.dark .note-card {
+    /* Only properties that should be forced by dark mode are here */
+    color: #e0e0e0;
+}
+
+.note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 5px; 
+}
+
+.note-header input {
+    flex-grow: 1;
+    min-width: 0; 
+    border: none;
+    background: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 0;
+    color: inherit;
+}
+
+.note-card.pinned {
+    order: -1; 
+    border: 2px solid gold;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.5);
+    transform: translateY(-5px);
+}
+
+.note-card.pinned:hover {
+    transform: translateY(-5px);
+}
+
+.pin-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0 5px;
+    opacity: 0.5;
+    transition: opacity 0.2s, transform 0.2s;
+    color: var(--text-color);
+    flex-shrink: 0;
+}
+
+.pin-btn:hover {
+    opacity: 1;
+}
+
+.pin-btn.active {
+    color: gold; 
+    opacity: 1;
+}
+
+body.dark .note-card.pinned {
+    border: 2px solid gold; 
+}
+
+#noteControls button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #5cb85c;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+.delete-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0 5px;
+    color: var(--text-color);
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.delete-btn:hover {
+    opacity: 1;
+}
+
+.note-card.selected {
+    box-shadow: 0 0 0 3px var(--accent-color);
+}
+
+
+#imageGalleryContainer {
+    padding: 0 15px 15px 15px; 
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+body.dark #imageGalleryContainer {
+    border-bottom-color: #333;
+}
+
+#imageGalleryContainer h2 {
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+#imageGallery {
+    display: flex;
+    overflow-x: auto; 
+    overflow-y: hidden;
+    gap: 15px;
+    padding-bottom: 10px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#imageGallery::-webkit-scrollbar {
+    display: none;
+}
+
+.gallery-item {
+    flex-shrink: 0;
+    width: 65px;
+    height: 65px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+    border: 2px solid #ddd;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    color: #333;
+    font-weight: bold;
+    
+    position: relative; 
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item.selected {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color) 40%, transparent);
+    transform: scale(1.05);
+}
+
+.gallery-item.selected::after {
+    content: '✓'; 
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 0.8em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.dark .gallery-item {
+    color: #eee;
+    background-color: #333;
+    border: 2px solid #555;
 }
